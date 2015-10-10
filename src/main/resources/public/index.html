@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vaadin Grid with paged REST datasource</title>
+  <script src="https://cdn.vaadin.com/vaadin-components/0.3.0-beta10/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link href="https://cdn.vaadin.com/vaadin-components/0.3.0-beta10/vaadin-components/vaadin-components.html" rel="import">
+  <script src="Promise.min.js"></script>
+  <script src="main.js"></script>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    }
+  </style>
+</head>
+<body>
+<h1>Vaadin Grid with paged REST datasource</h1>
+<vaadin-grid selection-mode="multi">
+  <table>
+    <col name="firstName" header-text="First Name" sortable>
+    <col name="lastName" header-text="Last Name" sortable>
+    <col name="orderProgress" header-text="Order progress">
+    <col name="company" header-text="Company" sortable>
+    <col name="address" header-text="Address" sortable>
+    <col name="city" header-text="City" sortable>
+    <col name="zip" header-text="Zip" sortable width="100">
+  </table>
+</vaadin-grid>
+</body>
+</html>
