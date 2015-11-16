@@ -99,9 +99,9 @@ document.addEventListener('WebComponentsReady', function () {
      *
      * Assembles final result and returns it to the caller.
      */
-    function resolveRequest(fetchRequest) {
-      var firstIndex = fetchRequest.index;
-      var lastIndex = firstIndex + fetchRequest.count;
+    function resolveRequest(properties, callback) {
+      var firstIndex = properties.index;
+      var lastIndex = firstIndex + properties.count;
       var firstPage = getPageNum(firstIndex);
       var lastPage = getPageNum(lastIndex);
 
@@ -119,15 +119,15 @@ document.addEventListener('WebComponentsReady', function () {
           }
         }
       }
-      fetchRequest.success(result, totalElements);
+      callback(result, totalElements);
     }
 
-    return function (fetchRequest) {
-      var firstIndex = fetchRequest.index;
-      var lastIndex = firstIndex + fetchRequest.count;
+    return function (properties, callback) {
+      var firstIndex = properties.index;
+      var lastIndex = firstIndex + properties.count;
       var firstPage = getPageNum(firstIndex);
       var lastPage = getPageNum(lastIndex);
-      var sortOrder = fetchRequest.sortOrder;
+      var sortOrder = properties.sortOrder;
 
       // Reset cache if we change any sort options
       if (sortChanged) {
@@ -150,12 +150,12 @@ document.addEventListener('WebComponentsReady', function () {
           results.forEach(function (result) {
             addToCache(result.page, result.content);
           });
-          resolveRequest(fetchRequest);
+          resolveRequest(properties, callback);
         }).catch(function (error) {
           console.log(error);
         });
       } else {
-        resolveRequest(fetchRequest);
+        resolveRequest(properties, callback);
       }
       cleanCache(firstPage, lastPage);
     };
@@ -163,7 +163,7 @@ document.addEventListener('WebComponentsReady', function () {
 
   var grid = document.querySelector('vaadin-grid');
   grid.frozenColumns = 2;
-  grid.datasource = new PagedDataSource({
+  grid.items = new PagedDataSource({
     baseUrl: '/api/customers',
     pageLength: 50
   });
